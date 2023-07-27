@@ -1,7 +1,6 @@
-import { PrismaClient } from "@prisma/client";
 import { Router } from "express";
-
-const prisma = new PrismaClient();
+import { prisma } from "../../lib/prisma";
+import { register } from "./register";
 
 const userRoutes = Router();
 
@@ -11,16 +10,6 @@ userRoutes.get("/user", async (request, response) => {
 	response.status(200).send(users);
 });
 
-userRoutes.post("/user", async (request, response) => {
-	const {name, email, password} = request.body;
-	const user = await prisma.user.create({
-		data: {
-			name,
-			email,
-			password
-		}
-	});
-	return response.status(201).send(user);
-});
+userRoutes.post("/user", register);
 
 export default userRoutes;
