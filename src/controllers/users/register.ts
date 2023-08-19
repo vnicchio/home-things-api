@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import PrismaUserRepository from "../../repositories/prisma/prismaUserRepository";
 import { UserRegisterService } from "../../services/user/register";
+import { AppError } from "../../utils/AppError";
 
 export async function register(request: Request, response: Response) {
 	const {name, email, password} = request.body;
@@ -11,7 +12,9 @@ export async function register(request: Request, response: Response) {
   
 		await registerUserService.execute({name, email, password});
 	} catch (err) {
-		return response.status(409).send();
+		if (err instanceof AppError) {
+			return response.status(err.statusCode).send({message: err.message});
+		}
 	}
 	
 	return response.status(201).send();
