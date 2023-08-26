@@ -1,15 +1,21 @@
 import { Router } from "express";
-import { prisma } from "../lib/prisma";
-import { register } from "../controllers/users/register";
+// import { prisma } from "../lib/prisma";
+import { UserController } from "../controllers/UserController";
+import { userAuthenticated } from "../middlewares/userAuthenticated";
 
 const userRoutes = Router();
 
-userRoutes.get("/", async (request, response) => {
-	const users = await prisma.user.findMany();
+const userController = new UserController();
 
-	response.status(200).send(users);
+userRoutes.get("/", userAuthenticated, async (request, response) => {
+	console.log("TESTE");
+	// const users = await prisma.user.findMany();
+
+	return response.status(200).send({message: "Teste"});
+
+	
 });
 
-userRoutes.post("/", register);
+userRoutes.post("/", userController.register);
 
 export default userRoutes;
