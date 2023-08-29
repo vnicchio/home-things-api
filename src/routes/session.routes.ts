@@ -6,5 +6,6 @@ const sessionRoutes = Router();
 const sessionController = new SessionController();
 
 sessionRoutes.post("/", sessionController.create);
+sessionRoutes.post("/refresh-token", sessionController.refresh);
 
 export default sessionRoutes;

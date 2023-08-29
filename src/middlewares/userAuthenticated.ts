@@ -14,6 +14,8 @@ export function userAuthenticated(request: Request, response: Response, next: Ne
 	try {
 		const {sub: user_id} = verify(token, process.env.JWT_SECRET || "");
 
+		console.log(token);
+
 		request.user = {
 			id: Number(user_id)
 		};

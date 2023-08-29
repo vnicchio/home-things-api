@@ -32,12 +32,12 @@ export class SessionCreateService{
 
 		const token = sign({}, process.env.JWT_SECRET || "" , {
 			subject: String(user.id),
-			expiresIn: "10s"
+			expiresIn: "1d"
 		});
 
 		const refreshToken = sign({}, process.env.JWT_SECRET || "" , {
 			subject: String(user.id),
-			expiresIn: "1d"
+			expiresIn: "7d"
 		});
 
 		const userFinal: UserReponse = {
